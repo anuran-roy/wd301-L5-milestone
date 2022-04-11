@@ -186,6 +186,7 @@ export default function Form(props: { formId: number }) {
                 return <LabelSelect
                 key={field.id}
                 id={field.id}
+                parent_id={props.formId}
                 label={field.label}
                 options={field.options}
                 updateLabelCB={updateLabel}
