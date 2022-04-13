@@ -7,12 +7,16 @@ import responseDataType from "../types/responseDataType";
 import getForms from "../functions/getForms";
 import getResponses from "../functions/getResponses";
 import saveResponses from "../functions/saveResponses";
-import { TextFieldInput, DropdownFieldInput, RadioFieldInput, TextAreaInput, MultiselectFieldInput } from "./Preview/PreviewInput";
+import {
+  TextFieldInput,
+  DropdownFieldInput,
+  RadioFieldInput,
+  TextAreaInput,
+  MultiselectFieldInput,
+} from "./Preview/PreviewInput";
 import { LabelMultiselect, Dropdown } from "./Preview/PreviewMultiselect";
 
 import { formFieldType } from "../types/formTypes";
-
-
 
 export default function Preview(props: { formId: number }) {
   const getForm: () => formDataType = () => {
@@ -54,7 +58,7 @@ export default function Preview(props: { formId: number }) {
   const emptyForm = () => {
     alert("Form Empty. Returning to home screen...");
     // navigate("/");
-    return (<Redirect to="/" />)
+    return <Redirect to="/" />;
   };
 
   const gotoNextQuestion = () => {
@@ -99,28 +103,11 @@ export default function Preview(props: { formId: number }) {
   const updateTextInput = (e_value: string, id: number) => {
     // console.log(responseState);
     // console.log(e_value);
-    if(responseState.formFields){
-    setResponseState({
-      ...responseState,
-      formFields: responseState.formFields.map((field) => {
-        if (field.id !== id || field.kind !== "text") {
-          return field;
-        } else {
-          return {
-            ...field,
-            value: e_value,
-          };
-        }
-      }),
-    });}
-  };
-
-  const updateDropdownInput: (e_value: string, id: number) => void = (e_value: string, id: number) => {
     if (responseState.formFields) {
       setResponseState({
         ...responseState,
         formFields: responseState.formFields.map((field) => {
-          if (field.id !== id || (field.kind !== "dropdown")) {
+          if (field.id !== id || field.kind !== "text") {
             return field;
           } else {
             return {
@@ -131,9 +118,33 @@ export default function Preview(props: { formId: number }) {
         }),
       });
     }
-  }
+  };
 
-  const updateRadioInput: (e_value: string, id: number) => void = (e_value: string, id: number) => {
+  const updateDropdownInput: (e_value: string, id: number) => void = (
+    e_value: string,
+    id: number
+  ) => {
+    if (responseState.formFields) {
+      setResponseState({
+        ...responseState,
+        formFields: responseState.formFields.map((field) => {
+          if (field.id !== id || field.kind !== "dropdown") {
+            return field;
+          } else {
+            return {
+              ...field,
+              value: e_value,
+            };
+          }
+        }),
+      });
+    }
+  };
+
+  const updateRadioInput: (e_value: string, id: number) => void = (
+    e_value: string,
+    id: number
+  ) => {
     if (responseState.formFields) {
       setResponseState({
         ...responseState,
@@ -149,20 +160,26 @@ export default function Preview(props: { formId: number }) {
         }),
       });
     }
-  }
+  };
 
-  const updateValues: (new_values: string[], preexisting_values: string[]) => string[] = (new_values: string[], preexisting_values: string[]) => {
+  const updateValues: (
+    new_values: string[],
+    preexisting_values: string[]
+  ) => string[] = (new_values: string[], preexisting_values: string[]) => {
     let new_arr: string[] = preexisting_values;
-    new_values.forEach(element => {
+    new_values.forEach((element) => {
       if (!preexisting_values.includes(element)) {
         new_values.push(element);
       }
     });
 
     return new_arr;
-  }
+  };
 
-  const updateMultiselectInput: (e_value: string[], id: number) => void = (e_value: string[], id: number) => {
+  const updateMultiselectInput: (e_value: string[], id: number) => void = (
+    e_value: string[],
+    id: number
+  ) => {
     if (responseState.formFields) {
       setResponseState({
         ...responseState,
@@ -172,15 +189,18 @@ export default function Preview(props: { formId: number }) {
           } else {
             return {
               ...field,
-              value: e_value// (() => updateValues(e_value, field.value))(),
+              value: e_value, // (() => updateValues(e_value, field.value))(),
             };
           }
         }),
       });
     }
-  }
+  };
 
-  const updateTextAreaInput: (e_value: string, id: number) => void = (e_value: string, id: number) => {
+  const updateTextAreaInput: (e_value: string, id: number) => void = (
+    e_value: string,
+    id: number
+  ) => {
     if (responseState.formFields) {
       setResponseState({
         ...responseState,
@@ -196,19 +216,21 @@ export default function Preview(props: { formId: number }) {
         }),
       });
     }
-  }
+  };
 
   const renderField = (field: formFieldType) => {
     switch (field.kind) {
       case "text":
-        return <TextFieldInput
-          id={field.id}
-          key={`question-${field.id}`}
-          label={field.label}
-          fieldType={field.fieldType}
-          value={field.value}
-          updateTextInputCB={updateTextInput}
-        />
+        return (
+          <TextFieldInput
+            id={field.id}
+            key={`question-${field.id}`}
+            label={field.label}
+            fieldType={field.fieldType}
+            value={field.value}
+            updateTextInputCB={updateTextInput}
+          />
+        );
       case "dropdown":
         return (
           <DropdownFieldInput
@@ -218,46 +240,50 @@ export default function Preview(props: { formId: number }) {
             value={field.value}
             updateDropdownCB={updateDropdownInput}
           />
-        )
+        );
       case "radio":
-        return (<div>
-          <RadioFieldInput
+        return (
+          <div>
+            <RadioFieldInput
+              id={field.id}
+              label={field.label}
+              options={field.options}
+              value={field.value}
+              // updateDropdownCB={updateDropdownInput}
+              updateRadioCB={updateRadioInput}
+            />
+          </div>
+        );
+
+      case "multiselect":
+        return (
+          // <div>This is a multiselect field</div>
+          <MultiselectFieldInput
             id={field.id}
             label={field.label}
             options={field.options}
             value={field.value}
-            // updateDropdownCB={updateDropdownInput}
-            updateRadioCB={updateRadioInput}
+            updateMultiselectCB={updateMultiselectInput}
           />
-          </div>);
-      
-      case "multiselect":
-        return (
-        // <div>This is a multiselect field</div>
-        <MultiselectFieldInput
-          id={field.id}
-          label={field.label}
-          options={field.options}
-          value={field.value}
-          updateMultiselectCB={updateMultiselectInput}
-        />
         );
-      
+
       case "textarea":
-        return (<div className="flex">
+        return (
+          <div className="flex">
             <TextAreaInput
               id={field.id}
               value={field.value}
               label={field.label}
               updateTextAreaCB={updateTextAreaInput}
             />
-          </div>);
+          </div>
+        );
     }
-  }
+  };
 
-  return responseState.formFields.length === 0 ? 
+  return responseState.formFields.length === 0 ? (
     emptyForm()
-   : (
+  ) : (
     <AppContainer>
       <Header title=""></Header>
       <p className="flex justify-center py-5 text-3xl">{responseState.title}</p>
@@ -265,9 +291,7 @@ export default function Preview(props: { formId: number }) {
         <i>Last modified on:</i> {responseState.last_modified}
       </p>
       <p>Question {question + 1}</p>
-      {
-        renderField(responseState.formFields[question])
-      }
+      {renderField(responseState.formFields[question])}
       <div className="flex justify-center">
         <div
           onClick={(_) => {

@@ -1,5 +1,3 @@
 import React from "react";
 
-export function selectOption() {
-
-}
+export function selectOption() {}

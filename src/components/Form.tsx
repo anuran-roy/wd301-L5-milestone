@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { LabelText } from "./Labels/LabelText";
-import  { LabelTextarea }  from "./Labels/LabelTextarea";
+import { LabelTextarea } from "./Labels/LabelTextarea";
 import { LabelSelect } from "./Labels/LabelSelect";
-import  { LabelRadio }  from "./Labels/LabelRadio";
+import { LabelRadio } from "./Labels/LabelRadio";
 import { LabelMultiselect } from "./Labels/LabelMultiselect";
 
 import getForms from "../functions/getForms";
@@ -123,7 +123,7 @@ export default function Form(props: { formId: number }) {
       setNewField("");
     }
   };
-  
+
   const addRadioField: (label: string) => void = (label: string) => {
     if (newField.length === 0) {
       alert("Can't add a field with empty name!");
@@ -233,7 +233,7 @@ export default function Form(props: { formId: number }) {
           </div>
           <br />
           {formState.formFields.map((field) => {
-            switch(field.kind){
+            switch (field.kind) {
               case "text":
                 return (
                   <LabelText
@@ -246,57 +246,65 @@ export default function Form(props: { formId: number }) {
                     updateLabelCB={updateLabel}
                   />
                 );
-              
+
               case "dropdown":
-                return <LabelSelect
-                key={field.id}
-                id={field.id}
-                parent_id={props.formId}
-                label={field.label}
-                value={field.value}
-                options={field.options}
-                updateLabelCB={updateLabel}
-                removeLabelCB={removeField}
-              />
-              
+                return (
+                  <LabelSelect
+                    key={field.id}
+                    id={field.id}
+                    parent_id={props.formId}
+                    label={field.label}
+                    value={field.value}
+                    options={field.options}
+                    updateLabelCB={updateLabel}
+                    removeLabelCB={removeField}
+                  />
+                );
+
               case "radio":
-                return <LabelRadio
-                key={field.id}
-                id={field.id}
-                label={field.label}
-                options={field.options}
-                parent_id={props.formId}
-                value={field.value}
-                // kind="radio"
-                updateLabelCB={updateLabel}
-                removeLabelCB={removeField}
-              />
-              
+                return (
+                  <LabelRadio
+                    key={field.id}
+                    id={field.id}
+                    label={field.label}
+                    options={field.options}
+                    parent_id={props.formId}
+                    value={field.value}
+                    // kind="radio"
+                    updateLabelCB={updateLabel}
+                    removeLabelCB={removeField}
+                  />
+                );
+
               case "multiselect":
-                return <LabelMultiselect
-                key={field.id}
-                id={field.id}
-                parent_id={props.formId}
-                label={field.label}
-                options={field.options}
-                value={field.value}
-                // kind="multiselect"
-                updateLabelCB={updateLabel}
-                removeLabelCB={removeField}
-              />
+                return (
+                  <LabelMultiselect
+                    key={field.id}
+                    id={field.id}
+                    parent_id={props.formId}
+                    label={field.label}
+                    options={field.options}
+                    value={field.value}
+                    // kind="multiselect"
+                    updateLabelCB={updateLabel}
+                    removeLabelCB={removeField}
+                  />
+                );
               // return <LabelMultiselect />
 
               case "textarea":
-                return <LabelTextarea
-                  key={field.id}
-                  id={field.id}
-                  label={field.label}
-                  value={field.value}
-                  updateLabelCB={updateLabel}
-                  removeLabelCB={removeField}
-                />
+                return (
+                  <LabelTextarea
+                    key={field.id}
+                    id={field.id}
+                    label={field.label}
+                    value={field.value}
+                    updateLabelCB={updateLabel}
+                    removeLabelCB={removeField}
+                  />
+                );
               default:
-                return (<div>Invalid Field</div>)
+                return <div>Invalid Field</div>;
             }
           })}
           <div className="flex gap-6">
@@ -321,10 +329,10 @@ export default function Form(props: { formId: number }) {
             </div>
           </div>
         </form>
-        <div className="grid lg:grid-cols-5 md:grid-cols-2">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5">
           <input
             type="text"
-            className="my-2 flex-1 rounded-md border-2 border-gray-200 p-2"
+            className="my-3 flex-1 rounded-md border-2 border-gray-200 p-2"
             placeholder="Enter new field name..."
             id="addTextFieldInput"
             value={newField}
@@ -337,7 +345,7 @@ export default function Form(props: { formId: number }) {
           <select
             id="fieldOptions"
             name="fieldOptions"
-            className="mx-5 rounded-md px-3"
+            className="mx-5 my-3 rounded-md px-3"
           >
             <optgroup label="Textual">
               <option value="text">Text</option>
@@ -365,7 +373,7 @@ export default function Form(props: { formId: number }) {
             onClick={(_) => {
               addTextField(document.getElementById("fieldOptions")?.value);
             }}
-            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-green-500 shadow-lg hover:bg-green-500 hover:text-white"
+            className="btn m-4 cursor-pointer rounded-lg bg-white py-2 px-4 text-2xl font-bold text-green-500 shadow-lg hover:bg-green-500 hover:text-white"
           >
             Text +
           </div>
@@ -373,7 +381,7 @@ export default function Form(props: { formId: number }) {
             onClick={(_) => {
               addDropdownField(document.getElementById("fieldOptions")?.value);
             }}
-            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-purple-500 shadow-lg hover:bg-purple-500 hover:text-white"
+            className="btn m-4 cursor-pointer rounded-lg bg-white py-2 px-4 text-2xl font-bold text-purple-500 shadow-lg hover:bg-purple-500 hover:text-white"
           >
             Dropdown +
           </div>
@@ -381,27 +389,29 @@ export default function Form(props: { formId: number }) {
             onClick={(_) => {
               addRadioField(document.getElementById("fieldOptions")?.value);
             }}
-            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-orange-500 shadow-lg hover:bg-orange-500 hover:text-white"
+            className="btn m-4 cursor-pointer rounded-lg bg-white py-2 px-4 text-2xl font-bold text-orange-500 shadow-lg hover:bg-orange-500 hover:text-white"
           >
             Radio +
           </div>
           <div
             onClick={(_) => {
-              addMultiselectField(document.getElementById("fieldOptions")?.value);
+              addMultiselectField(
+                document.getElementById("fieldOptions")?.value
+              );
             }}
-            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-teal-500 shadow-lg hover:bg-teal-500 hover:text-white"
+            className="btn m-4 cursor-pointer rounded-lg bg-white py-2 px-4 text-2xl font-bold text-teal-500 shadow-lg hover:bg-teal-500 hover:text-white"
           >
             Multiselect +
           </div>
           <div className="my-2 mx-6 flex-1 items-center py-2 px-6">
-            <label htmlFor="autoSave" className="px-2 my-3 py-3">
+            <label htmlFor="autoSave" className="my-3 px-2 py-3">
               Autosave?
             </label>
             <input
               type="checkbox"
               name="autosave"
               id="autoSave"
-              className="px-2 my-3 py-3"
+              className="my-3 px-2 py-3"
               defaultChecked={autoSaveState}
               onClick={(_) => {
                 switchAutoSave();

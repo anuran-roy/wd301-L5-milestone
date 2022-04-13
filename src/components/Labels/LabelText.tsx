@@ -36,7 +36,3 @@ export function LabelText(props: {
     </>
   );
 }
-
-
-
-

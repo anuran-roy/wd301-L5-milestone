@@ -30,17 +30,17 @@
 //     //     </select>
 //     //   </div>
 //     // );
-  
+
 //     const initialState = () => {
 //       return getForms().filter(form => form.id === props.parent_id)[0];
 //     }
 //     const [optionsState, setOptionsState] = useState(props.options);
 //     const [newOptionState, setNewOptionState] = useState("");
 //     const [formOptionsState, setFormOptionsState] = useState(() => initialState());
-  
+
 //     const saveForm = (currentState: formFieldType) => {
 //       console.log(currentState);
-  
+
 //       setFormOptionsState({
 //         ...formOptionsState,
 //         formFields: [
@@ -48,11 +48,11 @@
 //           currentState
 //         ],
 //       });
-  
+
 //       console.log("Getting forms...");
 //       console.log(getForms());
 //     }
-  
+
 //     const saveOptions = () => {
 //       const currentState: formFieldType = {
 //         kind: "multiselect",
@@ -61,31 +61,31 @@
 //         options: optionsState,
 //         value: props.value,
 //       }
-  
+
 //       console.log("Saving...")
-  
+
 //       saveForm(currentState);
-  
+
 //       const existing_forms =  getForms().filter(form => form.id !== props.parent_id);
 //       // console.log(existing_forms);
 //       // saveForms(updatedForms);
 //       saveForms([...existing_forms, formOptionsState]);
 //     }
-  
+
 //     useEffect(() => {
 //       saveOptions();
 //     }, [optionsState]);
-  
+
 //     const addSelectOption = (option: string) => {
 //       if (option.length === 0) {
 //         alert("Can't add a field with empty name!");
 //       } else if (!optionsState.includes(option)) {
 //         setOptionsState([...optionsState, option]);
 //       }
-  
+
 //       setNewOptionState("");
 //     };
-  
+
 //     const removeSelectOption = (option: string) => {
 //       if (optionsState.includes(option)) {
 //         setOptionsState(
@@ -93,7 +93,7 @@
 //         );
 //       }
 //     };
-  
+
 //     return (
 //       <>
 //         <div className="flex">
@@ -167,25 +167,23 @@ export const LabelMultiselect = () => {
   return (
     <div className="autcomplete-wrapper">
       <div className="autcomplete">
-        <div className="w-full flex flex-col items-center mx-auto">
+        <div className="mx-auto flex w-full flex-col items-center">
           <div className="w-full">
-            <div className="flex flex-col items-center relative">
+            <div className="relative flex flex-col items-center">
               <div className="w-full ">
-                <div className="my-2 p-1 flex border border-gray-200 bg-white rounded ">
+                <div className="my-2 flex rounded border border-gray-200 bg-white p-1 ">
                   <div className="flex flex-auto flex-wrap">
                     {selectedItems.map((tag, index) => {
                       return (
                         <div
                           key={index}
-                          className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300 "
+                          className="m-1 flex items-center justify-center rounded-full border border-teal-300 bg-white bg-teal-100 py-1 px-2 font-medium text-teal-700 "
                         >
-                          <div className="text-xs font-normal leading-none max-w-full flex-initial">
+                          <div className="max-w-full flex-initial text-xs font-normal leading-none">
                             {tag}
                           </div>
                           <div className="flex flex-auto flex-row-reverse">
-                            <div>
-
-                            </div>
+                            <div></div>
                           </div>
                         </div>
                       );
@@ -193,14 +191,12 @@ export const LabelMultiselect = () => {
                     <div className="flex-1">
                       <input
                         placeholder=""
-                        className="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
+                        className="h-full w-full appearance-none bg-transparent p-1 px-2 text-gray-800 outline-none"
                       />
                     </div>
                   </div>
-                  <div className="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200">
-                    <button className="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none">
-
-                    </button>
+                  <div className="flex w-8 items-center border-l border-gray-200 py-1 pl-2 pr-1 text-gray-300">
+                    <button className="h-6 w-6 cursor-pointer text-gray-600 outline-none focus:outline-none"></button>
                   </div>
                 </div>
               </div>
@@ -212,25 +208,29 @@ export const LabelMultiselect = () => {
   );
 };
 
-export const Dropdown = ({list, addItem}) => {
-
-
-    return (<div id="dropdown" className="absolute shadow top-100 bg-white z-40 w-full lef-0 rounded max-h-select overflow-y-auto ">
-    <div className="flex flex-col w-full">
-        { list.map((item, key) => {
-            return <div key={key} 
-            className="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100" 
-            onClick={() => addItem(item)}>
-            <div className="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100" >
-                <div className="w-full items-center flex">
-        <   div className="mx-2 leading-6  ">
-            { item }
-           </div>
-          </div>
-         </div>
-        </div>
+export const Dropdown = ({ list, addItem }) => {
+  return (
+    <div
+      id="dropdown"
+      className="top-100 lef-0 max-h-select absolute z-40 w-full overflow-y-auto rounded bg-white shadow "
+    >
+      <div className="flex w-full flex-col">
+        {list.map((item, key) => {
+          return (
+            <div
+              key={key}
+              className="w-full cursor-pointer rounded-t border-b border-gray-100 hover:bg-teal-100"
+              onClick={() => addItem(item)}
+            >
+              <div className="relative flex w-full items-center border-l-2 border-transparent p-2 pl-2 hover:border-teal-100">
+                <div className="flex w-full items-center">
+                  <div className="mx-2 leading-6  ">{item}</div>
+                </div>
+              </div>
+            </div>
+          );
         })}
+      </div>
     </div>
-</div>);
-
+  );
 };

@@ -19,7 +19,7 @@ export default function Header(props: { title: string }) {
         />
         <h1 className="text-center text-2xl">{props.title}</h1>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg:items-center lg:justify-center lg:text-xl sm:gap-3 md:gap-5 lg:gap-6 lg:my-5">
+      <div className="grid sm:grid-cols-2 sm:gap-3 md:grid-cols-4 md:gap-5 lg:my-5 lg:grid-cols-5 lg:items-center lg:justify-center lg:gap-6 lg:text-xl">
         {links.map((link) => {
           return ["/form", "/preview"].indexOf(link.url) >= 0 ? (
             <ActiveLink
