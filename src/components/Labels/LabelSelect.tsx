@@ -29,7 +29,7 @@ export function LabelSelect(props: {
       setFormOptionsState({
         ...formOptionsState,
         formFields: [
-          ...formOptionsState.formFields.filter((formField: formFieldType) => formField.id !== props.parent_id),
+          ...formOptionsState.formFields.filter((formField: formFieldType) => formField.id !== props.id),
           currentState
         ],
       });
@@ -48,7 +48,7 @@ export function LabelSelect(props: {
       }
   
       console.log("Saving...")
-  
+      console.log(currentState)
       saveForm(currentState);
   
       const existing_forms =  getForms().filter(form => form.id !== props.parent_id);

@@ -284,6 +284,7 @@ export default function Form(props: { formId: number }) {
                 updateLabelCB={updateLabel}
                 removeLabelCB={removeField}
               />
+              // return <LabelMultiselect />
 
               case "textarea":
                 return <LabelTextarea
@@ -388,7 +389,7 @@ export default function Form(props: { formId: number }) {
             onClick={(_) => {
               addMultiselectField(document.getElementById("fieldOptions")?.value);
             }}
-            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-blue-500 shadow-lg hover:bg-blue-500 hover:text-white"
+            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-teal-500 shadow-lg hover:bg-teal-500 hover:text-white"
           >
             Multiselect +
           </div>

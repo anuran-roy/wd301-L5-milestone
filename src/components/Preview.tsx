@@ -7,7 +7,8 @@ import responseDataType from "../types/responseDataType";
 import getForms from "../functions/getForms";
 import getResponses from "../functions/getResponses";
 import saveResponses from "../functions/saveResponses";
-import { TextFieldInput, DropdownFieldInput, RadioFieldInput, MultiselectFieldInput, TextAreaInput } from "./PreviewInput";
+import { TextFieldInput, DropdownFieldInput, RadioFieldInput, TextAreaInput, MultiselectFieldInput } from "./Preview/PreviewInput";
+import { LabelMultiselect, Dropdown } from "./Preview/PreviewMultiselect";
 
 import { formFieldType } from "../types/formTypes";
 
@@ -171,7 +172,7 @@ export default function Preview(props: { formId: number }) {
           } else {
             return {
               ...field,
-              value: (() => updateValues(e_value, field.value))(),
+              value: e_value// (() => updateValues(e_value, field.value))(),
             };
           }
         }),

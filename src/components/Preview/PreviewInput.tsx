@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export function TextFieldInput(props: {
   id: number;
@@ -100,33 +100,83 @@ export function MultiselectFieldInput(props: {
   updateMultiselectCB: (e_value: string[], id: number) => void, 
   // removeLabelCB: (id: number) => void
 }) {
+  const [chosenOptions, setChosenOptions] = useState(props.value);
+
+  const isSelected = (option: string) => {
+    return chosenOptions.includes(option);
+  }
+
+  const selectOption = (option: string) => {
+    setChosenOptions([...chosenOptions, option]);
+  }
+
+  const unselectOption = (option: string) => {
+    setChosenOptions(chosenOptions.filter(existing_option => existing_option !== option));
+  }
+
+  const renderIfSelected = (option: string) => {
+    if (isSelected(option)) {
+      return <div className="text-gray-500 hover:text-white">selected</div>
+    }
+  }
+  const toggleSelection = (option: string) => {
+    if (isSelected(option)) {
+      unselectOption(option);
+    }
+    else { 
+      selectOption(option);
+    }
+  }
+
+
+  const showSelected = () => {
+    if (chosenOptions.length === 0) {
+      return "Select Options ⌄"
+    } else {
+      return `Selected Options: ${chosenOptions} ⌄`
+    }
+  }
+  useEffect(() => {
+    props.updateMultiselectCB(chosenOptions, props.id);
+  }, [chosenOptions]);
+
   return (
     <>
       <label htmlFor={`multiselect-${props.id}`}>{props.label}:</label>
-      <div className="flex">
-        <select
-          key={props.id}
-          id={`multiselect-${props.id}`}
+      {/* <button id="dropdownDefault" data-dropdown-toggle="dropdown" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button> */}
+      {/* <!-- Dropdown menu --> */}
+      <div
+        className="btn cursor-pointer p-2 m-3 text-center shadow-lg hover:shadow-none rounded-md lg:w-80 md:w-48 hover:bg-teal-500 hover:text-white border-2"
+        onClick={(_) => {document.getElementById(`${props.id}-dropdownOptions`).classList.toggle("hidden")}}
+      >{showSelected()} </div>
+      <div id={`${props.id}-dropdownOptions`} className="hidden z-10 w-96 bg-white rounded divide-y divide-gray-100 shadow-lg">
+          {/* <ul
+            key={props.id}
+            id={`multiselect-${props.id}`}
+            className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault"> */}
+        <ul
           className="py-3 mx-3 px-2"
-          multiple={true}
-          size={1}// {props.options.length}
+          // multiple={true}
+          // size={1}// {props.options.length}
           // defaultChecked
           >
           {/* <option>Select an Option</option> */}
           {
             props.options.map((dropdownOption: string, optionIndex: number) => {
               // console.log(dropdownOption);
-              return <option
+              return <li
+                className="cursor-pointer hover:bg-teal-500 hover:text-white my-2 p-2 hover:rounded-md"
                 value={dropdownOption}
                 key={optionIndex}
-                onClick={(e: any) => {
-            console.log(e.target.value);
-            props.updateMultiselectCB([e.target.value], props.id)
+                onClick={(_) => {
+            // console.log(dropdownOption);
+            props.updateMultiselectCB([dropdownOption], props.id)
+            toggleSelection(dropdownOption);
           }}
-              >{dropdownOption}</option>
+              >{dropdownOption} {renderIfSelected(dropdownOption)}</li>
             })
           }
-        </select>
+        </ul>
       </div>
     </>
   );

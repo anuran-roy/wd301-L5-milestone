@@ -12,24 +12,6 @@ export function LabelMultiselect(props: {
     updateLabelCB: (target_value: string, id: number) => void;
     removeLabelCB: (id: number) => void;
   }) {
-    // return (
-    //   <div className="flex">
-    //     <select
-    //       className="mx-3 py-3 px-2"
-    //       onChange={(e: any) => {
-    //         props.updateLabelCB(e.target.value, props.id);
-    //       }}
-    //       multiple
-    //     >
-    //       <option>Select an Option</option>
-    //       {props.options.map((dropdownOption: string, optionIndex: number) => (
-    //         <option value={dropdownOption} key={optionIndex}>
-    //           {dropdownOption}
-    //         </option>
-    //       ))}
-    //     </select>
-    //   </div>
-    // );
   
     const initialState = () => {
       return getForms().filter(form => form.id === props.parent_id)[0];
@@ -67,8 +49,6 @@ export function LabelMultiselect(props: {
       saveForm(currentState);
   
       const existing_forms =  getForms().filter(form => form.id !== props.parent_id);
-      // console.log(existing_forms);
-      // saveForms(updatedForms);
       saveForms([...existing_forms, formOptionsState]);
     }
   
@@ -108,8 +88,6 @@ export function LabelMultiselect(props: {
             }}
           ></input>
           <div className="my-5 mx-3">
-            {/* Options: {"[" + optionsState + "]"}
-            {const id=`addNewOption-${props.options.length+2}`;} */}
             <br />
             <div className="flex">
               <input
