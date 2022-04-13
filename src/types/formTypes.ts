@@ -41,3 +41,5 @@ export type TextareaField = {
     value: string,
 }
 export type formFieldType = TextField | DropdownField | RadioField | MultiselectField | TextareaField;
+
+export type fieldKind = "text" | "dropdown" | "radio" | "multiselect" | "textarea";

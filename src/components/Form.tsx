@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LabelText, LabelSelect, LabelTextarea } from "./Labels";
+import { LabelText, LabelSelect, LabelTextarea, LabelMultiselect, LabelRadio } from "./Labels";
 import getForms from "../functions/getForms";
 import saveForms from "../functions/saveForms";
 import formDataType from "../types/formDataType";
@@ -188,29 +188,34 @@ export default function Form(props: { formId: number }) {
                 id={field.id}
                 parent_id={props.formId}
                 label={field.label}
+                value={field.value}
                 options={field.options}
                 updateLabelCB={updateLabel}
                 removeLabelCB={removeField}
               />
               
               case "radio":
-                return <LabelSelect
+                return <LabelRadio
                 key={field.id}
                 id={field.id}
                 label={field.label}
                 options={field.options}
-                // value={field.value}
+                parent_id={props.formId}
+                value={field.value}
+                // kind="radio"
                 updateLabelCB={updateLabel}
                 removeLabelCB={removeField}
               />
               
               case "multiselect":
-                return <LabelSelect
+                return <LabelMultiselect
                 key={field.id}
                 id={field.id}
+                parent_id={props.formId}
                 label={field.label}
                 options={field.options}
-                // value={field.value}
+                value={field.value}
+                kind="multiselect"
                 updateLabelCB={updateLabel}
                 removeLabelCB={removeField}
               />
