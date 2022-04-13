@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { LabelText, LabelSelect, LabelTextarea, LabelMultiselect, LabelRadio } from "./Labels";
+import { LabelText } from "./Labels/LabelText";
+import  { LabelTextarea }  from "./Labels/LabelTextarea";
+import { LabelSelect } from "./Labels/LabelSelect";
+import  { LabelRadio }  from "./Labels/LabelRadio";
+import { LabelMultiselect } from "./Labels/LabelMultiselect";
+
 import getForms from "../functions/getForms";
 import saveForms from "../functions/saveForms";
 import formDataType from "../types/formDataType";
@@ -74,10 +79,6 @@ export default function Form(props: { formId: number }) {
   };
 
   const addTextField = (field_type: textFieldTypes) => {
-    // let field_type: string = "text";
-    // if (newField.toLowerCase() === "password") {
-    //   field_type = "password";
-    // }
     if (newField.length === 0) {
       alert("Can't add a field with empty name!");
     } else {
@@ -100,9 +101,74 @@ export default function Form(props: { formId: number }) {
     }
   };
 
-  const addDropdownField: (options: string[]) => void = (options: string[]) => {
+  const addDropdownField: (label: string) => void = (label: string) => {
+    if (newField.length === 0) {
+      alert("Can't add a field with empty name!");
+    } else {
+      setFormState({
+        ...formState,
+        hash: Number(new Date()),
+        formFields: [
+          ...formState.formFields,
+          {
+            kind: "dropdown",
+            id: Number(new Date()),
+            label: newField,
+            options: [],
+            value: "",
+          },
+        ],
+      });
 
-  }
+      setNewField("");
+    }
+  };
+  
+  const addRadioField: (label: string) => void = (label: string) => {
+    if (newField.length === 0) {
+      alert("Can't add a field with empty name!");
+    } else {
+      setFormState({
+        ...formState,
+        hash: Number(new Date()),
+        formFields: [
+          ...formState.formFields,
+          {
+            kind: "radio",
+            id: Number(new Date()),
+            label: newField,
+            options: [],
+            value: "",
+          },
+        ],
+      });
+
+      setNewField("");
+    }
+  };
+
+  const addMultiselectField: (label: string) => void = (label: string) => {
+    if (newField.length === 0) {
+      alert("Can't add a field with empty name!");
+    } else {
+      setFormState({
+        ...formState,
+        hash: Number(new Date()),
+        formFields: [
+          ...formState.formFields,
+          {
+            kind: "multiselect",
+            id: Number(new Date()),
+            label: newField,
+            options: [],
+            value: [],
+          },
+        ],
+      });
+
+      setNewField("");
+    }
+  };
 
   const clearLabels = () => {
     setFormState({
@@ -153,7 +219,6 @@ export default function Form(props: { formId: number }) {
             e.preventDefault();
           }}
         >
-          {/* <label htmlFor="formTitle">Form Name: </label> */}
           <div className="divide-black-500 flex divide-y-8">
             <input
               type="text"
@@ -215,7 +280,7 @@ export default function Form(props: { formId: number }) {
                 label={field.label}
                 options={field.options}
                 value={field.value}
-                kind="multiselect"
+                // kind="multiselect"
                 updateLabelCB={updateLabel}
                 removeLabelCB={removeField}
               />
@@ -255,7 +320,7 @@ export default function Form(props: { formId: number }) {
             </div>
           </div>
         </form>
-        <div className="flex">
+        <div className="grid lg:grid-cols-5 md:grid-cols-2">
           <input
             type="text"
             className="my-2 flex-1 rounded-md border-2 border-gray-200 p-2"
@@ -286,6 +351,7 @@ export default function Form(props: { formId: number }) {
               <option value="tel">Phone Number</option>
               <option value="range">Range</option>
             </optgroup>
+            <optgroup></optgroup>
             {/* <optgroup label="Multimedia">
               <option value="image">Image Upload</option>
               <option value="file">File Upload</option>
@@ -294,22 +360,47 @@ export default function Form(props: { formId: number }) {
             {/* <option value="color">Color</option> */}
             {/* <option value="checkbox">Checkbox</option> */}
           </select>
-          <button
+          <div
             onClick={(_) => {
               addTextField(document.getElementById("fieldOptions")?.value);
             }}
-            className="btn m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-green-500 shadow-lg hover:bg-green-500 hover:text-white"
+            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-green-500 shadow-lg hover:bg-green-500 hover:text-white"
           >
-            +
-          </button>
+            Text +
+          </div>
+          <div
+            onClick={(_) => {
+              addDropdownField(document.getElementById("fieldOptions")?.value);
+            }}
+            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-purple-500 shadow-lg hover:bg-purple-500 hover:text-white"
+          >
+            Dropdown +
+          </div>
+          <div
+            onClick={(_) => {
+              addRadioField(document.getElementById("fieldOptions")?.value);
+            }}
+            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-orange-500 shadow-lg hover:bg-orange-500 hover:text-white"
+          >
+            Radio +
+          </div>
+          <div
+            onClick={(_) => {
+              addMultiselectField(document.getElementById("fieldOptions")?.value);
+            }}
+            className="btn cursor-pointer m-4 rounded-lg bg-white py-2 px-4 text-2xl font-bold text-blue-500 shadow-lg hover:bg-blue-500 hover:text-white"
+          >
+            Multiselect +
+          </div>
           <div className="my-2 mx-6 flex-1 items-center py-2 px-6">
-            <label htmlFor="autoSave" className="px-2">
+            <label htmlFor="autoSave" className="px-2 my-3 py-3">
               Autosave?
             </label>
             <input
               type="checkbox"
               name="autosave"
               id="autoSave"
+              className="px-2 my-3 py-3"
               defaultChecked={autoSaveState}
               onClick={(_) => {
                 switchAutoSave();
