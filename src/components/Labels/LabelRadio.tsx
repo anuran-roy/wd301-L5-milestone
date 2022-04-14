@@ -76,7 +76,6 @@ export function LabelRadio(props: {
       alert("Can't add a field with empty name!");
     } else if (!optionsState.includes(option)) {
       setOptionsState([...optionsState, option]);
-      (() => saveOptions())();
     }
 
     setNewOptionState("");
@@ -128,9 +127,9 @@ export function LabelRadio(props: {
           </div>
           <strong>Option</strong>:
           <ul className="list-disc">
-            {optionsState.map((existingOption) => {
+            {optionsState.map((existingOption: string, optionIndex: number) => {
               return (
-                <div className="flex">
+                <li className="flex" key={optionIndex+1}>
                   <div className="py-3">{existingOption}</div>
                   <div
                     className="button m-2 flex cursor-pointer items-center rounded-md bg-red-500 p-2 font-bold text-white hover:bg-red-700"
@@ -140,7 +139,7 @@ export function LabelRadio(props: {
                   >
                     ✖
                   </div>
-                </div>
+                </li>
               );
             })}
           </ul>

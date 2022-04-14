@@ -315,7 +315,7 @@ export default function Form(props: { formId: number }) {
           })}
           <div className="flex gap-6">
             <Link href="/">
-              <div className="my-4 rounded-md bg-sky-500 py-2 px-4 font-bold text-white hover:bg-sky-700">
+              <div className="my-4 rounded-md bg-sky-500 py-2 px-4 font-bold text-white hover:bg-sky-700" onClick={(_) => saveForm(formState)}>
                 Close Form
               </div>{" "}
             </Link>

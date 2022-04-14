@@ -84,9 +84,11 @@ export function LabelMultiselect(props: {
 
   return (
     <>
-      <div className="flex cursor-grabbing" draggable>
+      <div className="flex my-2" draggable>
+      <div className="w-8 bg-sky-500 opacity-50 hover:opacity-100 cursor-grabbing"></div>
+
         <input
-          className="my-2 flex-1 border-0 p-2 text-lg hover:border-b-2 hover:border-b-sky-500 focus:border-b-2 focus:border-b-sky-500 focus:outline-none focus:ring-0"
+          className="mx-2 my-2 flex-1 border-0 p-2 text-lg hover:border-b-2 hover:border-b-sky-500 focus:border-b-2 focus:border-b-sky-500 focus:outline-none focus:ring-0"
           id={`label-${props.id}`}
           type="text"
           placeholder="Enter field label"
@@ -118,9 +120,9 @@ export function LabelMultiselect(props: {
           </div>
           <strong>Option</strong>:
           <ul className="list-disc">
-            {optionsState.map((existingOption) => {
+            {optionsState.map((existingOption: string, optionIndex: number) => {
               return (
-                <div className="flex">
+                <li className="flex" key={optionIndex+1}>
                   <div className="py-3">{existingOption}</div>
                   <div
                     className="button m-2 flex cursor-pointer items-center rounded-md bg-red-500 p-2 font-bold text-white hover:bg-red-700"
@@ -130,7 +132,7 @@ export function LabelMultiselect(props: {
                   >
                     ✖
                   </div>
-                </div>
+                </li>
               );
             })}
           </ul>
