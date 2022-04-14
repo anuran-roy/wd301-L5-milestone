@@ -7,8 +7,8 @@ export function LabelTextarea(props: {
 }) {
   return (
     <>
-      <div className="flex my-2" draggable>
-      <div className="w-8 bg-sky-500 opacity-50 hover:opacity-100 cursor-grabbing"></div>
+      <div className="my-2 flex rounded-md hover:shadow-lg" draggable>
+        <div className="w-8 cursor-grabbing bg-sky-500 opacity-50 hover:opacity-100"></div>
         <input
           className="mx-2 my-2 flex-1 border-0 p-2 text-lg hover:border-b-2 hover:border-b-sky-500 focus:border-b-2 focus:border-b-sky-500 focus:outline-none focus:ring-0"
           id={`label-${props.id}`}

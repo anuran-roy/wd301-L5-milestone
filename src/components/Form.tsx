@@ -210,6 +210,45 @@ export default function Form(props: { formId: number }) {
     setFormState({ ...formState, hash: Number(new Date()), title: title });
     saveForm(formState);
   };
+
+  const addOption = (option: string, id: number) => {
+    if (option.length === 0) {
+      alert("Can't add a field with empty name!");
+    } else {
+      setFormState({
+        ...formState,
+        formFields: formState.formFields.map((field) => {
+          if (field.id === id && !field.options.includes(option)) {
+            return {
+              ...field,
+              options: [...field.options, option],
+            };
+          } else {
+            return field;
+          }
+        }),
+      });
+    }
+  };
+
+  const removeOption = (option: string, id: number) => {
+    setFormState({
+      ...formState,
+      formFields: formState.formFields.map((field) => {
+        if (field.id === id) {
+          return {
+            ...field,
+            options: field.options.filter(
+              (existing_option) => existing_option !== option
+            ),
+          };
+        } else {
+          return field;
+        }
+      }),
+    });
+  };
+
   return (
     <AppContainer>
       <Header title="" />
@@ -260,6 +299,8 @@ export default function Form(props: { formId: number }) {
                     removeLabelCB={removeField}
                     formState={formState}
                     setFormStateCB={setFormState}
+                    addOptionCB={addOption}
+                    removeOptionCB={removeOption}
                   />
                 );
 
@@ -277,6 +318,8 @@ export default function Form(props: { formId: number }) {
                     removeLabelCB={removeField}
                     formState={formState}
                     setFormStateCB={setFormState}
+                    addOptionCB={addOption}
+                    removeOptionCB={removeOption}
                   />
                 );
 
@@ -294,6 +337,8 @@ export default function Form(props: { formId: number }) {
                     removeLabelCB={removeField}
                     formState={formState}
                     setFormStateCB={setFormState}
+                    addOptionCB={addOption}
+                    removeOptionCB={removeOption}
                   />
                 );
               // return <LabelMultiselect />
@@ -315,7 +360,10 @@ export default function Form(props: { formId: number }) {
           })}
           <div className="flex gap-6">
             <Link href="/">
-              <div className="my-4 rounded-md bg-sky-500 py-2 px-4 font-bold text-white hover:bg-sky-700" onClick={(_) => saveForm(formState)}>
+              <div
+                className="my-4 rounded-md bg-sky-500 py-2 px-4 font-bold text-white hover:bg-sky-700"
+                onClick={(_) => saveForm(formState)}
+              >
                 Close Form
               </div>{" "}
             </Link>

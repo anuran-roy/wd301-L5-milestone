@@ -13,55 +13,16 @@ export function LabelMultiselect(props: {
   updateLabelCB: (target_value: string, id: number) => void;
   removeLabelCB: (id: number) => void;
   formState: formDataType;
-  setFormStateCB: (formState: formDataType, ) => void;
+  setFormStateCB: (formState: formDataType) => void;
+  addOptionCB: (target_value: string, id: number) => void;
+  removeOptionCB: (target_value: string, id: number) => void;
 }) {
-  const initialState: () => formDataType = () => {
-    return getForms().filter((form) => form.id === props.parent_id)[0];
-  };
   const [optionsState, setOptionsState] = useState(() => props.options);
   const [newOptionState, setNewOptionState] = useState("");
-  const [formOptionsState, setFormOptionsState] = useState(() =>
-    initialState()
-  );
-
-  const saveForm = (currentState: formDataType) => {
-    console.log("From saveForm() method =");
-  console.log(currentState);
-
-  const localForms = getForms();
-  const updatedLocalForms = localForms.map((form) => {
-    return form.id === currentState.id ? currentState : form;
-  });
-  saveForms(updatedLocalForms);
-};
-
-  const saveOptions = () => {
-    console.log("optionsState in saveOptions = ");
-    console.log(optionsState);
-    const currentState: formFieldType = {
-      kind: "multiselect",
-      id: props.id,
-      label: props.label,
-      options: optionsState,
-      value: props.value,
-    };
-
-    props.setFormStateCB({
-      ...props.formState,
-      formFields: [
-        ...props.formState.formFields.map((formField: formFieldType) =>
-          formField.id === props.id ? currentState : formField
-        ),
-      ],
-    });
-
-    // () => saveForms([...getForms().filter(form => form.id !== props.formState.id), props.formState])();
-  };
 
   useEffect(() => {
-    console.log("useEffect triggered")
-    console.log(optionsState)
-    saveForm(props.formState);
+    console.log("useEffect triggered");
+    console.log(optionsState);
   }, [optionsState]);
 
   const addSelectOption = (option: string) => {
@@ -84,8 +45,8 @@ export function LabelMultiselect(props: {
 
   return (
     <>
-      <div className="flex my-2" draggable>
-      <div className="w-8 bg-sky-500 opacity-50 hover:opacity-100 cursor-grabbing"></div>
+      <div className="my-2 flex rounded-md shadow-md hover:shadow-lg" draggable>
+        <div className="w-8 cursor-grabbing bg-sky-500 opacity-50 hover:opacity-100"></div>
 
         <input
           className="mx-2 my-2 flex-1 border-0 p-2 text-lg hover:border-b-2 hover:border-b-sky-500 focus:border-b-2 focus:border-b-sky-500 focus:outline-none focus:ring-0"
@@ -111,8 +72,8 @@ export function LabelMultiselect(props: {
             <div
               className="button m-2 flex cursor-pointer items-center rounded-md bg-sky-500 p-2 font-bold text-white hover:bg-sky-700"
               onClick={(_) => {
+                props.addOptionCB(newOptionState, props.id);
                 addSelectOption(newOptionState);
-                saveOptions();
               }}
             >
               Add
@@ -122,11 +83,12 @@ export function LabelMultiselect(props: {
           <ul className="list-disc">
             {optionsState.map((existingOption: string, optionIndex: number) => {
               return (
-                <li className="flex" key={optionIndex+1}>
+                <li className="flex" key={optionIndex + 1}>
                   <div className="py-3">{existingOption}</div>
                   <div
                     className="button m-2 flex cursor-pointer items-center rounded-md bg-red-500 p-2 font-bold text-white hover:bg-red-700"
                     onClick={(_) => {
+                      props.removeOptionCB(existingOption, props.id);
                       removeSelectOption(existingOption);
                     }}
                   >

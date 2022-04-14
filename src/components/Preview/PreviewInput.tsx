@@ -40,7 +40,7 @@ export function DropdownFieldInput(props: {
       <label htmlFor={`${props.id}`}>{props.label}:</label>
       <div className="my-3 mx-2 flex py-3" id={`${props.id}`}>
         <select
-          className="mx-3 py-3 px-2"
+          className="mx-3 rounded-lg py-3 px-2"
           value={props.value}
           onChange={(e: any) => {
             props.updateDropdownCB(e.target.value, props.id);
