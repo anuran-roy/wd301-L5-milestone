@@ -12,6 +12,8 @@ export function LabelMultiselect(props: {
   value: string[];
   updateLabelCB: (target_value: string, id: number) => void;
   removeLabelCB: (id: number) => void;
+  formState: formDataType;
+  setFormStateCB: (formState: formDataType, ) => void;
 }) {
   const initialState: () => formDataType = () => {
     return getForms().filter((form) => form.id === props.parent_id)[0];
@@ -21,6 +23,17 @@ export function LabelMultiselect(props: {
   const [formOptionsState, setFormOptionsState] = useState(() =>
     initialState()
   );
+
+  const saveForm = (currentState: formDataType) => {
+    console.log("From saveForm() method =");
+  console.log(currentState);
+
+  const localForms = getForms();
+  const updatedLocalForms = localForms.map((form) => {
+    return form.id === currentState.id ? currentState : form;
+  });
+  saveForms(updatedLocalForms);
+};
 
   const saveOptions = () => {
     console.log("optionsState in saveOptions = ");
@@ -33,21 +46,22 @@ export function LabelMultiselect(props: {
       value: props.value,
     };
 
-    setFormOptionsState({
-      ...formOptionsState,
+    props.setFormStateCB({
+      ...props.formState,
       formFields: [
-        ...formOptionsState.formFields.map((formField: formFieldType) =>
+        ...props.formState.formFields.map((formField: formFieldType) =>
           formField.id === props.id ? currentState : formField
         ),
       ],
     });
 
-    // () => saveForms([...getForms().filter(form => form.id !== formOptionsState.id), formOptionsState])();
+    // () => saveForms([...getForms().filter(form => form.id !== props.formState.id), props.formState])();
   };
 
   useEffect(() => {
-    saveOptions();
-    // saveForms([...getForms().filter(form => form.id !== formOptionsState.id), formOptionsState]);
+    console.log("useEffect triggered")
+    console.log(optionsState)
+    saveForm(props.formState);
   }, [optionsState]);
 
   const addSelectOption = (option: string) => {
@@ -70,7 +84,7 @@ export function LabelMultiselect(props: {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex cursor-grabbing" draggable>
         <input
           className="my-2 flex-1 border-0 p-2 text-lg hover:border-b-2 hover:border-b-sky-500 focus:border-b-2 focus:border-b-sky-500 focus:outline-none focus:ring-0"
           id={`label-${props.id}`}

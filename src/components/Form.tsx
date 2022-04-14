@@ -258,6 +258,8 @@ export default function Form(props: { formId: number }) {
                     options={field.options}
                     updateLabelCB={updateLabel}
                     removeLabelCB={removeField}
+                    formState={formState}
+                    setFormStateCB={setFormState}
                   />
                 );
 
@@ -273,6 +275,8 @@ export default function Form(props: { formId: number }) {
                     // kind="radio"
                     updateLabelCB={updateLabel}
                     removeLabelCB={removeField}
+                    formState={formState}
+                    setFormStateCB={setFormState}
                   />
                 );
 
@@ -288,6 +292,8 @@ export default function Form(props: { formId: number }) {
                     // kind="multiselect"
                     updateLabelCB={updateLabel}
                     removeLabelCB={removeField}
+                    formState={formState}
+                    setFormStateCB={setFormState}
                   />
                 );
               // return <LabelMultiselect />
