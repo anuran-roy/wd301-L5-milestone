@@ -74,9 +74,10 @@ export function RadioFieldInput(props: {
         className="grid grid-cols-2 justify-center gap-2 py-3"
         key={`div-${props.id}`}
       >
+        <ul>
         {/* <option>Select an Option</option> */}
         {props.options.map((radioOption: string, optionIndex: number) => (
-          <>
+          <li key={`radio-${props.id}-element-${optionIndex}`} className="my-2 text-lg cursor-pointer">
             <label htmlFor={`${optionIndex}`} key={`label-${optionIndex}`}>
               {radioOption}
             </label>
@@ -91,8 +92,9 @@ export function RadioFieldInput(props: {
                 props.updateRadioCB(radioOption, props.id);
               }}
             />
-          </>
+          </li>
         ))}
+        </ul>
       </div>
     </>
   );

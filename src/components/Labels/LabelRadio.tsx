@@ -19,6 +19,8 @@ export function LabelRadio(props: {
   addOptionCB: (target_value: string, id: number) => void;
   removeOptionCB: (target_value: string, id: number) => void;
 }) {
+//   console.log(`Rerendering field with id ${props.id} on form ${props.parent_id}`);
+
   const [optionsState, setOptionsState] = useState(props.options);
   const [newOptionState, setNewOptionState] = useState("");
 

@@ -217,6 +217,7 @@ export default function Form(props: { formId: number }) {
     } else {
       setFormState({
         ...formState,
+        hash: Number(new Date()),
         formFields: formState.formFields.map((field) => {
           if (field.id === id && !field.options.includes(option)) {
             return {
@@ -234,6 +235,7 @@ export default function Form(props: { formId: number }) {
   const removeOption = (option: string, id: number) => {
     setFormState({
       ...formState,
+      hash: Number(new Date()),
       formFields: formState.formFields.map((field) => {
         if (field.id === id) {
           return {
